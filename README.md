@@ -24,9 +24,9 @@
 
 void simpleTest(int testId,String result) {
 
-System.out.println("这是第 " + testId + " 条测试用例");
+    System.out.println("这是第 " + testId + " 条测试用例");
 
-System.out.println(result);
+    System.out.println(result);
 
 }
 ~~~
@@ -43,7 +43,7 @@ csv文件第一行是参数名，参数名之间以英文逗号,隔开
 csv文件第二行开始是参数值，与第一行参数名一一对应，从第二行开始，有几行执行几次测试方法。
 
 比如上面这个测试方法执行后，结果如下：
-
+~~~
 这是第 1001 条测试用例
 
 SUCCESS
@@ -51,5 +51,5 @@ SUCCESS
 这是第 1002 条测试用例
 
 FAIL
-
+~~~
 未完待续
