@@ -22,7 +22,7 @@
 ~~~
 @AutoTest(file = "/autotest/simpleTest.csv")
 
-void simpleTest(int testId,String result) {
+void simpleTest(int testId, String result) {
 
     System.out.println("这是第 " + testId + " 条测试用例");
 
