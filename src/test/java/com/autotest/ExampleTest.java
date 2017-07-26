@@ -2,7 +2,12 @@ package com.autotest;
 
 import com.autotest.annotation.AutoTest;
 import com.autotest.base.AutoTestBase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,12 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class ExampleTest extends AutoTestBase {
 
+    @BeforeEach
+    void init() {
+    }
+
+    @AutoTest(file = "/autotest/simpleTest.csv")
+    void simpleTest(int testId, String result) {
+        System.out.println("这是第 " + testId + " 条测试用例");
+        System.out.println(result);
+    }
 
     @AutoTest(file = "/autotest/csvTest.csv")
-    @DisplayName("autotest测试读取csv")
+    @DisplayName("autotest读取csv数据")
     void autoTest(int testId, String result, String memo) {
         if (1001 == testId) {
-            assertEquals("SUCCESS",result);
+            assertEquals("SUCCESS", result);
             print("memo：" + memo);
         }
         if (1002 == testId) {
@@ -25,6 +39,11 @@ public class ExampleTest extends AutoTestBase {
             print("memo：" + memo);
         }
 
+    }
+
+    @AfterEach
+    @Disabled
+    void tearDown() {
     }
 
 }

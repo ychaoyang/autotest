@@ -153,7 +153,7 @@ public class DataDeal {
 
 
     /**
-     * 获取指定类和方法的参数
+     * 获取方法的参数
      *
      * @param context
      * @return
