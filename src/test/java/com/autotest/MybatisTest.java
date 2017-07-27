@@ -5,7 +5,7 @@ import com.autotest.base.SpringTestBase;
 import dal.model.Student;
 
 /**
- * Created by ychaoyang@yiji.com on 2017/7/27.
+ * Created by ychaoyang on 2017/7/27.
  */
 public class MybatisTest extends SpringTestBase{
 
