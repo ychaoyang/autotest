@@ -7,6 +7,9 @@
     AutoTest支持WebDriver，支持前端页面自动化测试。项目中有登录京东自动领取优惠券的例子(支持chrome)。
   
     AutoTest支持JUnit 5，只需要在测试方法上标注@AutoTest 即可，不再需要@RunWith  @ExtendWith等注解。
+    
+    AutoTest支持MyBatis，自动生成增删查改sql，方便操作数据库。
+    
 
 使用前
 ======
