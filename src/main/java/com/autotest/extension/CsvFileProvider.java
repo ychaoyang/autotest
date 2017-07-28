@@ -30,7 +30,6 @@ public class CsvFileProvider implements ArgumentsProvider, AnnotationConsumer<Au
 
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         String[] args = DataDeal.getParams(context, this.file);
-//        logger.info("args:{}",args);
         CsvParserSettings settings = new CsvParserSettings();
         settings.getFormat().setDelimiter(',');
         settings.getFormat().setQuote('\'');

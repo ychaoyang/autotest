@@ -40,8 +40,9 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
         ParameterResolver {
     protected static final Logger logger = LoggerFactory.getLogger(AutoTestExtension.class.getName());
 
-    private static final ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(AutoTestExtension.class);
+    private static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create("AutoTestExtension", "DataDeal");
 
+    private static int num = 0;
 
     @Override
     public boolean supportsTestTemplate(ExtensionContext context) {
@@ -88,7 +89,7 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
             try {
                 getTestContextManager(context).afterTestClass();
             } finally {
-                context.getStore(namespace).remove(context.getTestClass().get());
+                context.getStore(NAMESPACE).remove(context.getTestClass().get());
             }
         }
     }
@@ -117,6 +118,9 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
             Method testMethod = context.getTestMethod().get();
             getTestContextManager(context).beforeTestExecution(testInstance, testMethod);
         }
+        int times = context.getStore(NAMESPACE).get("times", int.class);
+        String methodName = context.getStore(NAMESPACE).get("methodName", String.class);
+        logger.info("========[{}]开始执行第[{}]条用例，一共执行[{}]次========", methodName, num++ < times ? num : times, times);
     }
 
     @Override
@@ -160,9 +164,6 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
     private AutoTestNameFormatter createNameFormatter(Method templateMethod) {
         AutoTest autoTest = findAnnotation(templateMethod, AutoTest.class).get();
         String name = autoTest.name().trim();
-
-        // TODO [#242] Replace logging with precondition check once we have a proper mechanism for
-        // handling validation exceptions during the TestEngine discovery phase.
         if (StringUtils.isBlank(name)) {
             logger.warn(String.format(
                     "Configuration error: @AutoTest on method [%s] must be declared with a non-empty name.",
@@ -175,10 +176,6 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
 
     protected static Stream<? extends Arguments> arguments(ArgumentsProvider provider, ExtensionContext context) {
         try {
-//            Stream<? extends Arguments> stream= provider.provideArguments(context);
-//
-//            testId = stream.findFirst().get().get()[0].toString();
-//            time = stream.findFirst().get().get().length;
             return provider.provideArguments(context);
         } catch (Exception e) {
             throw ExceptionUtils.throwAsUncheckedException(e);
@@ -192,7 +189,7 @@ public class AutoTestExtension implements TestTemplateInvocationContextProvider,
     private static TestContextManager getTestContextManager(ExtensionContext context) {
         Assert.notNull(context, "ExtensionContext must not be null");
         Class<?> testClass = context.getTestClass().get();
-        ExtensionContext.Store store = context.getStore(namespace);
+        ExtensionContext.Store store = context.getStore(NAMESPACE);
         return store.getOrComputeIfAbsent(testClass, TestContextManager::new, TestContextManager.class);
     }
 

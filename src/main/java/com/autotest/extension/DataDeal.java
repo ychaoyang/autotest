@@ -18,6 +18,8 @@ import java.util.*;
  */
 public class DataDeal {
 
+    private static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create("AutoTestExtension", "DataDeal");
+
     protected static final Logger logger = LoggerFactory.getLogger(DataDeal.class);
 
 
@@ -100,9 +102,10 @@ public class DataDeal {
                     }
                 }
             }
-            int time = result.size();
+            int times = result.size();
             String methodName = context.getTestMethod().get().getName();
-            logger.info("========测试用例[{}]开始执行，一共执行[{}]次========", methodName, time);
+            context.getStore(NAMESPACE).put("methodName", methodName);
+            context.getStore(NAMESPACE).put("times", times);
             return result.toArray(new String[result.size()]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

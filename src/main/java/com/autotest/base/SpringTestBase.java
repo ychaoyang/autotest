@@ -22,16 +22,33 @@ public class SpringTestBase extends AutoTestBase {
     @Autowired
     protected StudentMapper studentMapper;
 
+    /**
+     * 查询student表数据
+     * @param name 姓名
+     * @return
+     */
     protected List<Student> findStudentByName(String name) {
         StudentExample ex = new StudentExample();
         ex.createCriteria().andNameEqualTo(name);
         return studentMapper.selectByExample(ex);
     }
 
-    protected void insertStudent(Student student) {
-        studentMapper.insert(student);
+    /**
+     * 插入student表数据
+     * @param name 姓名
+     * @param age 年龄
+     */
+    protected void insertStudent(String name, short age) {
+        Student stu = new Student();
+        stu.setName(name);
+        stu.setAge(age);
+        studentMapper.insert(stu);
     }
 
+    /**
+     * 删除student表数据
+     * @param name 姓名
+     */
     protected void deleteStudentByName(String name) {
         if(null == name || name.isEmpty()){
             name = "name";
