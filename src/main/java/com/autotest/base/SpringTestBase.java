@@ -1,12 +1,13 @@
 package com.autotest.base;
 
-import dal.dao.StudentMapper;
-import dal.model.Student;
-import dal.model.StudentExample;
+import dal.dao.student.StudentDAO;
+import dal.model.student.StudentDO;
+import dal.model.student.StudentDOExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+
 
 /**
  * Created by ychaoyang on 2017/7/24.
@@ -14,48 +15,37 @@ import java.util.List;
 @ContextConfiguration({
 //        "/integration/dubbo.xml",
 //        "/integration/integration.xml",
-        "/dal/dal-db-test.xml",
+        "/dal/dal-db-student.xml",
         "/dal/dal-db.xml",
 })
 public class SpringTestBase extends AutoTestBase {
 
     @Autowired
-    protected StudentMapper studentMapper;
+    protected StudentDAO studentDAO;
 
-    /**
-     * 查询student表数据
-     * @param name 姓名
-     * @return
-     */
-    protected List<Student> findStudentByName(String name) {
-        StudentExample ex = new StudentExample();
+
+    protected List<StudentDO> findStudentByName(String name) {
+        StudentDOExample ex = new StudentDOExample();
         ex.createCriteria().andNameEqualTo(name);
-        return studentMapper.selectByExample(ex);
+        return studentDAO.selectByExample(ex);
     }
 
-    /**
-     * 插入student表数据
-     * @param name 姓名
-     * @param age 年龄
-     */
+
     protected void insertStudent(String name, short age) {
-        Student stu = new Student();
+        StudentDO stu = new StudentDO();
         stu.setName(name);
         stu.setAge(age);
-        studentMapper.insert(stu);
+        studentDAO.insert(stu);
     }
 
-    /**
-     * 删除student表数据
-     * @param name 姓名
-     */
+
     protected void deleteStudentByName(String name) {
         if(null == name || name.isEmpty()){
             name = "name";
         }
-        StudentExample ex = new StudentExample();
+        StudentDOExample ex = new StudentDOExample();
         ex.createCriteria().andNameEqualTo(name);
-        studentMapper.deleteByExample(ex);
+        studentDAO.deleteByExample(ex);
     }
 
 }

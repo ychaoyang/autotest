@@ -2,7 +2,6 @@ package com.autotest;
 
 import com.autotest.annotation.AutoTest;
 import com.autotest.base.SpringTestBase;
-import dal.model.Student;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

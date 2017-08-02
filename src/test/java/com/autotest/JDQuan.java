@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,7 +39,7 @@ public class JDQuan extends WebTestBase {
         d.findElement(By.linkText("登    录")).click();
         d.findElement(By.cssSelector("li.fore2>a")).click();
         switchToNewWindow(d);
-        for (int n = 1; n <= 30; n++) {
+        for (int n = 1; n <= 3; n++) {
             String xpath = "//*[@id=\"quanlist\"]/div[" + n + "]/div[1]/div[4]/div[1]/a/span";
             try {
                 WebElement webElement = d.findElement(By.xpath(xpath));
