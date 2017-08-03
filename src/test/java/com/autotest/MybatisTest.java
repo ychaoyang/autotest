@@ -12,7 +12,7 @@ public class MybatisTest extends SpringTestBase{
 
     @AutoTest(file= "autotest/mybatisTest.csv")
     void mybatisTest(String name,short age){
-        //清除数据
+        /**清除数据*/
         deleteStudentByName(name);
         //写数据
         insertStudent(name, age);

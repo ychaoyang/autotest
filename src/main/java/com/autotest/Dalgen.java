@@ -8,6 +8,7 @@ import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 /**
  * mybatis代码生成工具
- *
+ * <p>
  * Created by ychaoyang on 2017/8/2.
  */
 public class Dalgen {
@@ -30,7 +31,7 @@ public class Dalgen {
 
     public void gen() {
         logger.info("开始执行mybatis代码生成工具");
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         /*覆盖原生成的代码*/
         boolean overwrite = true;
         try {
