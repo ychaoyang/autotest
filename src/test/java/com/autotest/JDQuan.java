@@ -15,19 +15,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class JDQuan extends WebTestBase {
 
-    WebDriver d;
-
-    @BeforeEach
-    void init() {
-        //打开chrome浏览器
-        System.setProperty("webdriver.chrome.driver", Thread.currentThread().getContextClassLoader()
-                .getResource("autotest/" + "chromedriver.exe").getPath());
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("disable-infobars");
-        d = new ChromeDriver(options);
-        d.manage().window().maximize();
-        d.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-    }
 
     @AutoTest(file = "autotest/jd.csv")
     @DisplayName("登录京东，获取优惠券")
@@ -51,13 +38,6 @@ public class JDQuan extends WebTestBase {
 
         }
         sleep(2);
-    }
-
-
-    @AfterEach
-    void tearDown() {
-        //关闭浏览器
-        d.quit();
     }
 
 
