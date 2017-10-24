@@ -13,10 +13,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
-        <junit.jupiter.version>5.0.0-M6</junit.jupiter.version>
-        <junit.vintage.version>4.12.0-M6</junit.vintage.version>
-        <junit.platform.version>1.0.0-M6</junit.platform.version>
-        <spring.version>5.0.0.M5</spring.version>
+        <junit.jupiter.version>5.0.0</junit.jupiter.version>
+        <junit.vintage.version>4.12.0</junit.vintage.version>
+        <junit.platform.version>1.0.0</junit.platform.version>
+        <spring.version>5.0.0.RELEASE</spring.version>
         <javassist.version>3.12.1.GA</javassist.version>
         <slf4j.version>1.7.12</slf4j.version>
         <cxf.version>2.7.0</cxf.version>

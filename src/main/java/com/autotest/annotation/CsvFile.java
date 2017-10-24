@@ -2,7 +2,6 @@ package com.autotest.annotation;
 
 import com.autotest.extension.CsvFileProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.platform.commons.meta.API;
 
 import java.lang.annotation.*;
 
@@ -12,14 +11,13 @@ import java.lang.annotation.*;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@API(API.Usage.Experimental)
 @ArgumentsSource(CsvFileProvider.class)
 public @interface CsvFile {
-    String file();
+	String file();
 
-    String encoding() default "UTF-8";
+	String encoding() default "UTF-8";
 
-    String lineSeparator() default "\n";
+	String lineSeparator() default "\n";
 
-    char delimiter() default ',';
+	char delimiter() default ',';
 }

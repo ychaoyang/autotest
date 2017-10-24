@@ -18,26 +18,27 @@ import java.util.stream.Stream;
  * Created by ychaoyang on 2017/7/14.
  */
 public class CsvFileProvider implements ArgumentsProvider, AnnotationConsumer<AutoTest> {
-    private static final Logger logger = LoggerFactory.getLogger(CsvFileProvider.class.getName());
-    private String file;
-    private Charset charset;
+	private static final Logger logger = LoggerFactory.getLogger(CsvFileProvider.class.getName());
+	private String file;
+	private Charset charset;
 
+	@Override
+	public void accept(AutoTest annotation) {
+		this.file = annotation.file();
+		this.charset = Charset.forName(annotation.encoding());
+	}
 
-    public void accept(AutoTest annotation) {
-        this.file = annotation.file();
-        this.charset = Charset.forName(annotation.encoding());
-    }
-
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-        String[] args = DataDeal.getParams(context, this.file);
-        CsvParserSettings settings = new CsvParserSettings();
-        settings.getFormat().setDelimiter(',');
-        settings.getFormat().setQuote('\'');
-        settings.getFormat().setQuoteEscape('\'');
-        settings.setAutoConfigurationEnabled(false);
-        CsvParser csvParser = new CsvParser(settings);
-        return Arrays.stream(args).map(csvParser::parseLine).map(Arguments::of);
-    }
+	@Override
+	public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+		String[] args = DataDeal.getParams(context, this.file);
+		CsvParserSettings settings = new CsvParserSettings();
+		settings.getFormat().setDelimiter(',');
+		settings.getFormat().setQuote('\'');
+		settings.getFormat().setQuoteEscape('\'');
+		settings.setAutoConfigurationEnabled(false);
+		CsvParser csvParser = new CsvParser(settings);
+		return Arrays.stream(args).map(csvParser::parseLine).map(Arguments::of);
+	}
 
 }
 
