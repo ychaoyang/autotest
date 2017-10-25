@@ -2,6 +2,7 @@ package com.autotest.extension;
 
 import com.csvreader.CsvWriter;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
@@ -10,7 +11,12 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -18,7 +24,8 @@ import java.util.*;
  */
 public class DataDeal {
 
-    private static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create("AutoTestExtension", "DataDeal");
+    private static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create("AutoTestExtension",
+            "DataDeal");
 
     protected static final Logger logger = LoggerFactory.getLogger(DataDeal.class);
 
@@ -33,16 +40,16 @@ public class DataDeal {
         Method m = context.getTestMethod().get();
         List<Param> args = getVariables(context);
         URL url = Thread.currentThread().getContextClassLoader()
-                .getResource(file);
+                .getResource("autotest/" + file);
         if (null == url) {
             String filep = context.getTestClass().get().getClassLoader().getResource(".").getFile();
-            String fileDir = filep.replace("target/test-classes/", "src/test/resources/") + file;
+            String fileDir = filep.replace("target/test-classes/", "src/test/resources/autotest/") + file;
             createCsvFile(args, fileDir);
             throw new IllegalArgumentException("找不到csv文件,创建文件成功:" + fileDir);
 
         }
         String filePath = Thread.currentThread().getContextClassLoader()
-                .getResource(file).getPath();
+                .getResource("autotest/" + file).getPath();
 
         File fl = new File(filePath);
         BufferedReader reader = null;
@@ -58,38 +65,47 @@ public class DataDeal {
                 if (lineNo == 1) {
                     header = splitContent(line);
                 } else {
-                    if (line.startsWith("~")) {
+                    if (line.contains("~")) {
                         line = line.replace("~", "");
                     }
                     List<String> list = new ArrayList<>();
-                    List<HashMap<String, String>> parList = parseLine(header, line, lineNo);
-                    int k = 0;
+                    HashMap<String, String> map = parseLine(header, line, lineNo);
                     for (int n = 0; n < args.size(); n++) {
-                        for (Map<String, String> map : parList) {
-                            String name = args.get(n).getName();
-                            if (null != map.get(name)) {
-                                list.add(map.get(name).toString().trim());
-                                k++;
+                        String name = args.get(n).getName();
+                        if (StringUtils.isNotBlank(map.get(name))) {
+                            String val = map.get(name).toString().trim();
+                            if (val.contains("。")) {
+                                val = val.replace("。", ",");
                             }
-                        }
-                        if (k - n != 1) {
+                            list.add(val);
+                        } else {
                             String type = args.get(n).getType();
-                            if ("int".equals(type)
+                            if ("String".equals(type)) {
+                                list.add("");
+                                continue;
+                            } else if ("int".equals(type)
                                     || "Integer".equals(type)
                                     || "long".equals(type)
+                                    || "Long".equals(type)
                                     || "short".equals(type)
+                                    || "Short".equals(type)
                                     || "byte".equals(type)
+                                    || "Byte".equals(type)
                                     || "float".equals(type)
+                                    || "Float".equals(type)
                                     || "double".equals(type)
+                                    || "Double".equals(type)
                                     || "char".equals(type)
+                                    || "Character".equals(type)
                                     ) {
                                 list.add("0");
+                                continue;
                             } else if ("boolean".equals(type)) {
                                 list.add("false");
+                                continue;
                             } else {
-                                list.add(null);
+                                list.add("");
                             }
-                            k++;
                         }
                     }
                     StringBuffer str = new StringBuffer();
@@ -115,8 +131,19 @@ public class DataDeal {
         return null;
     }
 
+    private static Pattern pattern = Pattern.compile("\\{[^}]*\\}");
 
     public static String[] splitContent(String input) {
+
+        //过滤所有的json字符串
+        Matcher match = pattern.matcher(input);
+        while (match.find()) {
+            if (!StringUtils.isBlank(match.group())) {
+                String json = match.group();
+                String fmt_json = json.replace(",", "。");
+                input = replace(input, json, fmt_json);
+            }
+        }
         ArrayList<String> result = new ArrayList();
         char character = 0;
         StringBuilder value = new StringBuilder();
@@ -138,20 +165,45 @@ public class DataDeal {
         return (String[]) result.toArray(new String[0]);
     }
 
-    private static List<HashMap<String, String>> parseLine(String[] header, String line, int lineNo) {
-        List list = new ArrayList();
+    public static String replace(String text, String repl, String with) {
+        return replace(text, repl, with, -1);
+    }
+
+    public static String replace(String text, String repl, String with, int max) {
+        if ((text == null) || (repl == null) || (with == null) || (repl.length() == 0)
+                || (max == 0)) {
+            return text;
+        }
+
+        StringBuffer buf = new StringBuffer(text.length());
+        int start = 0;
+        int end = 0;
+
+        while ((end = text.indexOf(repl, start)) != -1) {
+            buf.append(text.substring(start, end)).append(with);
+            start = end + repl.length();
+
+            if (--max == 0) {
+                break;
+            }
+        }
+
+        buf.append(text.substring(start));
+        return buf.toString();
+    }
+
+    private static HashMap<String, String> parseLine(String[] header, String line, int lineNo) {
+        HashMap<String, String> parMap = new HashMap<String, String>();
         String[] params = splitContent(line);
         if (params.length != header.length) {
             throw new RuntimeException("数据文件:" + " 第" + lineNo + "行格式错误");
         } else {
             for (int i = 0; i < header.length; ++i) {
-                Map<String, String> parMap = new HashMap<String, String>();
                 parMap.put(header[i], params[i]);
-                list.add(parMap);
             }
 
         }
-        return list;
+        return parMap;
     }
 
 
@@ -163,14 +215,14 @@ public class DataDeal {
      */
     public static List<Param> getVariables(ExtensionContext context) {
         List<Param> list = new ArrayList<Param>();
-        Parameter[] parameters = context.getTestMethod().get().getParameters();
+        Parameter[] Paramters = context.getTestMethod().get().getParameters();
         LocalVariableTableParameterNameDiscoverer u =
                 new LocalVariableTableParameterNameDiscoverer();
         String[] params = u.getParameterNames(context.getTestMethod().get());
-        for (int i = 0; i < parameters.length; i++) {
+        for (int i = 0; i < Paramters.length; i++) {
             Param p = new Param();
             p.setName(params[i].trim());
-            p.setType(parameters[i].getType().getSimpleName());
+            p.setType(Paramters[i].getType().getSimpleName());
             list.add(p);
         }
 
@@ -181,6 +233,11 @@ public class DataDeal {
         File excelfile = new File(filePath);
         if (!excelfile.exists()) {
             try {
+                String dir = filePath.substring(0,filePath.lastIndexOf("/"));
+                File dirFile = new File(dir);
+                if(!dirFile.exists()){
+                    dirFile.mkdir();
+                }
                 CsvWriter cwriter = new CsvWriter(filePath);
                 for (Iterator<Param> it = list.iterator(); it.hasNext(); ) {
                     Param p = (Param) it.next();
