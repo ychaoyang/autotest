@@ -1,5 +1,4 @@
-package com.autotest.test;
-
+package com.autotest.student;
 
 
 import lombok.Getter;
@@ -15,10 +14,6 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class StudentEntity implements Serializable {
-
-	public StudentEntity(){
-
-	}
 
 	private long id;
 
