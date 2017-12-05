@@ -1,4 +1,4 @@
-package com.autotest.student;
+package com.autotest.dao.student;
 
 
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class StudentEntity implements Serializable {
+public class Student implements Serializable {
 
 	private long id;
 
