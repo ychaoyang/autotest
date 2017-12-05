@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class MybatisTest extends SpringTestBase{
 
-    @AutoTest(file= "autotest/mybatisTest.csv")
+    @AutoTest(file= "mybatisTest.csv")
     void mybatisTest(String name,short age){
         /**清除数据*/
         deleteStudentByName(name);

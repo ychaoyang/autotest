@@ -1,8 +1,8 @@
 package com.autotest;
 
 import com.autotest.annotation.AutoTest;
-import com.autotest.dao.spring.UserDao;
 import com.autotest.dao.student.StudentDao;
+import com.autotest.dao.user.UserDao;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +20,7 @@ public class SpringbootTest {
 	UserDao userDao;
 
 
-	@AutoTest(file = "/csvTest.csv")
+	@AutoTest(file = "csvTest.csv")
 	void testDemo(int testId) {
 		System.out.println(testId);
 		System.out.println(studentDao.getAll().get(0).toString());

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class JDQuan extends WebTestBase {
 
 
-    @AutoTest(file = "autotest/jd.csv")
+    @AutoTest(file = "jd.csv")
     @DisplayName("登录京东，获取优惠券")
     void getQuan(String testId, String userName, String passWord) {
         d.get("http://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F");

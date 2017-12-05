@@ -17,77 +17,29 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = StudentDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "studentSqlSessionFactory")
-public class StudentDataSourceConfig {
+public class StudentDataSourceConfig extends DruidConfig {
 
-	/**
-	 * 精确到 student 目录,以便跟其他数据源隔离
-	 */
 	static final String PACKAGE = "com.autotest.dao.student";
 
 	@Value("${student.datasource.url}")
-	private String url;
+	private String studentUrl;
 
 	@Value("${student.datasource.username}")
-	private String user;
+	private String studentUser;
 
 	@Value("${student.datasource.password}")
-	private String password;
+	private String studentPassword;
 
 	@Value("${student.datasource.driverClassName}")
-	private String driverClass;
-
-	@Value("${spring.datasource.initialSize}")
-	private int initialSize;
-
-	@Value("${spring.datasource.minIdle}")
-	private int minIdle;
-
-	@Value("${spring.datasource.maxActive}")
-	private int maxActive;
-
-	@Value("${spring.datasource.maxWait}")
-	private int maxWait;
-
-	@Value("${spring.datasource.timeBetweenEvictionRunsMillis}")
-	private int timeBetweenEvictionRunsMillis;
-
-	@Value("${spring.datasource.minEvictableIdleTimeMillis}")
-	private int minEvictableIdleTimeMillis;
-
-	@Value("${spring.datasource.validationQuery}")
-	private String validationQuery;
-
-	@Value("${spring.datasource.testWhileIdle}")
-	private boolean testWhileIdle;
-
-	@Value("${spring.datasource.testOnBorrow}")
-	private boolean testOnBorrow;
-
-	@Value("${spring.datasource.testOnReturn}")
-	private boolean testOnReturn;
-
-	@Value("${spring.datasource.poolPreparedStatements}")
-	private boolean poolPreparedStatements;
-
-	@Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")
-	private int maxPoolPreparedStatementPerConnectionSize;
-
-	@Value("${spring.datasource.filters}")
-	private String filters;
-
-	@Value("{spring.datasource.connectionProperties}")
-	private String connectionProperties;
+	private String studentDriverClass;
 
 	@Bean(name = "studentDataSource")
 	public DataSource studentDataSource() {
-
 		DruidDataSource dataSource = new DruidDataSource();
-
-		dataSource.setDriverClassName(driverClass);
-		dataSource.setUrl(url);
-		dataSource.setUsername(user);
-		dataSource.setPassword(password);
-
+		dataSource.setUrl(studentUrl);
+		dataSource.setUsername(studentUser);
+		dataSource.setPassword(studentPassword);
+		dataSource.setDriverClassName(studentDriverClass);
 		//configuration
 		dataSource.setInitialSize(initialSize);
 		dataSource.setMinIdle(minIdle);
@@ -101,7 +53,6 @@ public class StudentDataSourceConfig {
 		dataSource.setTestOnReturn(testOnReturn);
 		dataSource.setPoolPreparedStatements(poolPreparedStatements);
 		dataSource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
-
 		return dataSource;
 	}
 
@@ -113,11 +64,8 @@ public class StudentDataSourceConfig {
 	@Bean(name = "studentSqlSessionFactory")
 	public SqlSessionFactory studentSqlSessionFactory(@Qualifier("studentDataSource") DataSource studentDataSource)
 			throws Exception {
-
 		final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-//        设置数据源
 		sessionFactory.setDataSource(studentDataSource);
-//        返回数据库工厂实例对象
 		return sessionFactory.getObject();
 	}
 }

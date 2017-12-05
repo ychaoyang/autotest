@@ -19,13 +19,13 @@ public class ExampleTest extends AutoTestBase {
     void init() {
     }
 
-    @AutoTest(file = "/simpleTest.csv")
+    @AutoTest(file = "simpleTest.csv")
     void simpleTest(int testId, String result) {
         System.out.println("这是第 " + testId + " 条测试用例");
         System.out.println(result);
     }
 
-    @AutoTest(file = "/csvTest.csv")
+    @AutoTest(file = "csvTest.csv")
     @DisplayName("autotest读取csv数据")
     void autoTest(int testId, String result, String memo) {
         if (1001 == testId) {
