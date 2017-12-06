@@ -1,6 +1,7 @@
 package com.autotest.dao.student;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.autotest.service.MyMapper;
+import com.autotest.model.Student;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -8,13 +9,11 @@ import java.util.List;
 /**
  * Created by yu on 17/11/15.
  */
-@Mapper
-public interface StudentDao {
+public interface StudentDao extends MyMapper<Student> {
 
-	@Select("SELECT * FROM student")
-//	@Results({
-//			@Result(property = "name", column = "name"),
-//			@Result(property = "age", column = "age")
-//	})
-	List<Student> getAll();
+//	@Select("SELECT * FROM student")
+//	List<Student> getAll();
+
+
+
 }

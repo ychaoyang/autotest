@@ -1,8 +1,8 @@
 package com.autotest;
 
 import com.autotest.annotation.AutoTest;
-import com.autotest.dao.student.StudentDao;
-import com.autotest.dao.user.UserDao;
+import com.autotest.service.StudentService;
+import com.autotest.service.UserService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,18 +13,25 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class SpringbootTest {
 
 	@Autowired
-	StudentDao studentDao;
+	StudentService studentService;
 
-	@SuppressWarnings("all")
 	@Autowired
-	UserDao userDao;
+	UserService userService;
 
 
 	@AutoTest(file = "csvTest.csv")
 	void testDemo(int testId) {
 		System.out.println(testId);
-		System.out.println(studentDao.getAll().get(0).toString());
-		System.out.println(userDao.getAll().get(0).toString());
+		System.out.println(studentService.getStudentDao().selectAll());
+//		System.out.println(userService.getUserDao().getAll().get(0).toString());
+		System.out.println(userService.getUserDao().getUserById("1"));
+	}
+
+	@AutoTest(file = "csvTest.csv")
+	void testDemo2(int testId) {
+		System.out.println(testId);
+		System.out.println(studentService.getStudentDao().selectAll());
+		studentService.insertStudent();
 	}
 
 }

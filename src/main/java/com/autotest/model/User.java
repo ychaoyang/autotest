@@ -1,9 +1,10 @@
-package com.autotest.dao.user;
+package com.autotest.model;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @ToString
 public class User implements Serializable {
 
+	@Id
 	private String id;
 
 	private String uname;
