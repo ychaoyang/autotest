@@ -13,8 +13,6 @@ import java.util.List;
  * Created by ychaoyang on 2017/7/24.
  */
 @ContextConfiguration({
-//        "/integration/dubbo.xml",
-//        "/integration/integration.xml",
         "/dal/dal-db-student.xml",
         "/dal/dal-db.xml",
 })

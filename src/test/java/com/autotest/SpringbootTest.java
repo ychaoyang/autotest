@@ -22,9 +22,8 @@ public class SpringbootTest {
 	@AutoTest(file = "csvTest.csv")
 	void testDemo(int testId) {
 		System.out.println(testId);
-		System.out.println(studentService.getStudentDao().selectAll());
-//		System.out.println(userService.getUserDao().getAll().get(0).toString());
-		System.out.println(userService.getUserDao().getUserById("1"));
+//		System.out.println(studentService.getStudentDao().selectAll());
+		System.out.println(studentService.findStudentById("1"));
 	}
 
 	@AutoTest(file = "csvTest.csv")
