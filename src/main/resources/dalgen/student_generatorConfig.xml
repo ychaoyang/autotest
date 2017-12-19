@@ -52,6 +52,7 @@
             <columnOverride column="DATE_FIELD" property="startDate" />
             <ignoreColumn column="FRED" />
             <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+
         </table>
         <table tableName="student" domainObjectName="Student" >
 

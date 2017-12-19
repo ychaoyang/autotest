@@ -1,6 +1,6 @@
 package com.autotest.dao.user;
 
-import com.autotest.service.MyMapper;
+import com.autotest.annotation.MyMapper;
 import com.autotest.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

@@ -18,7 +18,6 @@ public class SpringbootTest {
 	@Autowired
 	UserService userService;
 
-
 	@AutoTest(file = "csvTest.csv")
 	void testDemo(int testId) {
 		System.out.println(testId);
@@ -30,7 +29,7 @@ public class SpringbootTest {
 	void testDemo2(int testId) {
 		System.out.println(testId);
 		System.out.println(studentService.getStudentDao().selectAll());
-		studentService.insertStudent();
 	}
+
 
 }

@@ -1,4 +1,4 @@
-package com.autotest.service;
+package com.autotest.annotation;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

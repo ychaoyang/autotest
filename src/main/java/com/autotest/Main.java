@@ -11,9 +11,6 @@ import tk.mybatis.mapper.common.MySqlMapper;
 public class Main {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(Main.class, args);
 	}
-
-
 }
