@@ -1,7 +1,7 @@
 package com.autotest.service;
 
-import com.autotest.model.Student;
-import com.autotest.dao.student.StudentDao;
+import dal.dao.student.StudentDAO;
+import dal.model.student.StudentDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -15,25 +15,25 @@ import java.util.List;
 public class StudentService {
 
 	@Autowired
-	StudentDao studentDao;
+	StudentDAO studentDAO;
 
 
-	public StudentDao getStudentDao(){
-		return this.studentDao;
+	public StudentDAO getStudentDao(){
+		return this.studentDAO;
 	}
 
 	public  void insertStudent(){
-		Student student = new Student();
-		student.setId(333);
+		StudentDO student = new StudentDO();
+		student.setId(333L);
 		student.setName("名啊");
-		student.setAge("19");
-		studentDao.insert(student);
+		student.setAge(19);
+		studentDAO.insert(student);
 	}
 
-	public List<Student> findStudentById(String id){
-		Example example = new Example(Student.class);
+	public List<StudentDO> findStudentById(String id){
+		Example example = new Example(StudentDO.class);
 		example.createCriteria().andEqualTo("id", id);
-		return studentDao.selectByExample(example);
+		return studentDAO.selectByExample(example);
 	}
 
 }

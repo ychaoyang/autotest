@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = UserDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "userSqlSessionFactory")
 public class UserDataSourceConfig extends DruidConfig {
 
-	static final String PACKAGE = "com.autotest.dao.user";
+	static final String PACKAGE = "dal.dao.user";
 
 	@Value("${user.datasource.url}")
 	private String url;

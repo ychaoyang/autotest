@@ -4,24 +4,22 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <properties resource="dalgen/jdbc.properties" />
+    <properties resource="dalgen/jdbc.properties"/>
 
-    <classPathEntry location="src/main/resources/lib/mysql-connector-java-5.1.30.jar" />
+    <classPathEntry location="src/main/resources/lib/mysql-connector-java-5.1.30.jar"/>
 
-    <context id="student" targetRuntime="MyBatis3">
-        <plugin type="com.autotest.mybatis.ToStringPlugin" />
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-        <plugin type="com.autotest.mybatis.RenameExampleClassPlugin" />
-        <plugin
-                type="com.autotest.mybatis.MapperConfigPlugin">
-            <property name="targetProject" value="src/main/resources" />
-            <property name="targetPackage" value="dal.mapping" />
-            <property name="fileName" value="student.MapperConfig.xml" />
+    <context id="student" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="com.autotest.mybatis.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="com.autotest.mybatis.RenameExampleClassPlugin"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.autotest.annotation.MyMapper"/>
         </plugin>
-        <!-- 注释 -->
-        <commentGenerator
-                type="com.autotest.mybatis.DefaultCommentGenerator" />
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="${ds.student.mysqlUrl}"
@@ -29,33 +27,24 @@
                         password="${ds.student.password}">
         </jdbcConnection>
 
-        <javaTypeResolver >
-            <property name="forceBigDecimals" value="false" />
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="dal.model.student" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true" />
-            <property name="trimStrings" value="true" />
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="dal.mapping.student"  targetProject="src/main/resources">
-            <property name="enableSubPackages" value="true" />
+        <sqlMapGenerator targetPackage="dal.mapping.student" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="dal.dao.student"  targetProject="src/main/java">
-            <property name="enableSubPackages" value="true" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="dal.dao.student" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="ID" sqlStatement="DB2" identity="true" />
-            <columnOverride column="DATE_FIELD" property="startDate" />
-            <ignoreColumn column="FRED" />
-            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
-
-        </table>
-        <table tableName="student" domainObjectName="Student" >
-
+        <table tableName="%">
         </table>
 
     </context>

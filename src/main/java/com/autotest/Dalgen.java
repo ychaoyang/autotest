@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class Dalgen {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    String propertiesLocation = "dalgen/squid_generatorConfig.xml";
+    String propertiesLocation = "dalgen/student_generatorConfig.xml";
     Configuration config = null;
 
     public static void main(String[] args) {
