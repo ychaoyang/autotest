@@ -8,7 +8,7 @@
 
     <classPathEntry location="src/main/resources/lib/mysql-connector-java-5.1.30.jar"/>
 
-    <context id="student" targetRuntime="MyBatis3" defaultModelType="flat">
+    <context id="student" targetRuntime="MyBatis3" >
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
         <property name="javaFileEncoding" value="UTF-8"/>
@@ -17,8 +17,11 @@
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="com.autotest.mybatis.RenameExampleClassPlugin"/>
-        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.autotest.annotation.MyMapper"/>
+        <plugin
+                type="com.autotest.mybatis.MapperConfigPlugin">
+            <property name="targetProject" value="src/main/resources" />
+            <property name="targetPackage" value="dal" />
+            <property name="fileName" value="student.MapperConfig.xml" />
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
