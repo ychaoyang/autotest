@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-@ContextConfiguration({"classpath:dal/dal-db.xml",
+@ContextConfiguration({
         "classpath:dal/dal-db-student.xml",
 })
 public class SpringTestBase extends AutoTestBase {
