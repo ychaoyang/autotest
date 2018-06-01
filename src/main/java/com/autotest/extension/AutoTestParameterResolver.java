@@ -17,40 +17,41 @@ import java.lang.reflect.Parameter;
 import java.util.Optional;
 
 /**
- * Created by ychaoyang on 2017/7/17.
+ * Created by huairen on 2017/7/17.
  */
 public class AutoTestParameterResolver implements ParameterResolver {
 
-    private final Object[] arguments;
+	private final Object[] arguments;
 
-    AutoTestParameterResolver(Object[] arguments) {
-        this.arguments = arguments;
-    }
+	AutoTestParameterResolver(Object[] arguments) {
+		this.arguments = arguments;
+	}
 
-    @Override
-    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-        Executable declaringExecutable = parameterContext.getParameter().getDeclaringExecutable();
-        Method testMethod = extensionContext.getTestMethod().orElse(null);
-        return declaringExecutable.equals(testMethod) && parameterContext.getIndex() < arguments.length;
-    }
+	@Override
+	public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
+		Executable declaringExecutable = parameterContext.getParameter().getDeclaringExecutable();
+		Method testMethod = extensionContext.getTestMethod().orElse(null);
+		return declaringExecutable.equals(testMethod) && parameterContext.getIndex() < arguments.length;
+	}
 
-    @Override
-    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
-            throws ParameterResolutionException {
-        Object argument = arguments[parameterContext.getIndex()];
-        Parameter parameter = parameterContext.getParameter();
-        Optional<ConvertWith> annotation = AnnotationUtils.findAnnotation(parameter, ConvertWith.class);
-        // @formatter:off
-        ArgumentConverter argumentConverter = annotation.map(ConvertWith::value)
-                .map(clazz -> (ArgumentConverter) ReflectionUtils.newInstance(clazz))
-                .map(converter -> AnnotationConsumerInitializer.initialize(parameter, converter))
-                .orElse(DefaultArgumentConverter.INSTANCE);
-        // @formatter:on
-        try {
-            return argumentConverter.convert(argument, parameterContext);
-        } catch (Exception ex) {
-            throw new ParameterResolutionException("参数转换出错:" + parameter.getType().getName(),
-                    ex);
-        }
-    }
+	@Override
+	public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+			throws ParameterResolutionException {
+		Object argument = arguments[parameterContext.getIndex()];
+		Parameter parameter = parameterContext.getParameter();
+		Optional<ConvertWith> annotation = AnnotationUtils.findAnnotation(parameter, ConvertWith.class);
+		// @formatter:off
+		ArgumentConverter argumentConverter = annotation.map(ConvertWith::value)
+				.map(clazz -> (ArgumentConverter) ReflectionUtils.newInstance(clazz))
+				.map(converter -> AnnotationConsumerInitializer.initialize(parameter, converter))
+				.orElse(DefaultArgumentConverter.INSTANCE);
+		// @formatter:on
+		try {
+			return argumentConverter.convert(argument, parameterContext);
+		} catch (Exception ex) {
+			throw new ParameterResolutionException("参数转换出错:" + parameter.getType().getName()+":"+parameter.getName(),
+					ex);
+		}
+	}
+
 }

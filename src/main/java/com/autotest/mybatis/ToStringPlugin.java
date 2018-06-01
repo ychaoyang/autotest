@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by ychaoyang on 2017/8/2.
+ * Created by huairen on 2017/8/2.
  */
 public class ToStringPlugin extends PluginAdapter {
     private boolean useToStringFromRoot;
@@ -22,25 +22,30 @@ public class ToStringPlugin extends PluginAdapter {
     public ToStringPlugin() {
     }
 
+    @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
         this.useToStringFromRoot = StringUtility.isTrue(properties.getProperty("useToStringFromRoot"));
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }
 
+    @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         this.generateToString(introspectedTable, topLevelClass);
         return true;
     }
 
+    @Override
     public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         this.generateToString(introspectedTable, topLevelClass);
         return true;
     }
 
+    @Override
     public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         this.generateToString(introspectedTable, topLevelClass);
         return true;
@@ -59,7 +64,6 @@ public class ToStringPlugin extends PluginAdapter {
         method.addBodyLine("StringBuilder sb = new StringBuilder();");
         method.addBodyLine("sb.append(getClass().getSimpleName());");
         method.addBodyLine("sb.append(\" [\");");
-//        method.addBodyLine("sb.append(\"Hash = \").append(hashCode());");
         StringBuilder sb = new StringBuilder();
         Iterator var5 = topLevelClass.getFields().iterator();
 
@@ -72,10 +76,6 @@ public class ToStringPlugin extends PluginAdapter {
         }
 
         method.addBodyLine("sb.append(\"]\");");
-//        if(this.useToStringFromRoot && topLevelClass.getSuperClass() != null) {
-//            method.addBodyLine("sb.append(\", from super class \");");
-//            method.addBodyLine("sb.append(super.toString());");
-//        }
 
         method.addBodyLine("return sb.toString();");
         topLevelClass.addMethod(method);

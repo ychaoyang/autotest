@@ -5,7 +5,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 
 /**
- * Created by ychaoyang on 2017/9/6.
+ * Created by huairen on 2017/9/6.
  */
 public class MultiBeanNameGenerator implements BeanNameGenerator {
 

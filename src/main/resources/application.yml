@@ -1,0 +1,48 @@
+test:
+  url:
+    #加好油中台接口测试地址
+    jhy: http://172.18.1.32:8084/
+#数据库配置
+ds:
+  #default
+  default:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+  #school
+  school:
+    url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    tables: student
+#连接池的配置信息
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=100
+    minIdle: 1
+    validationQuery: SELECT 1 FROM DUAL
+    initialSize: 10
+    maxWait: 6000
+    poolPreparedStatements: false
+    filters: stat
+    maxPoolPreparedStatementPerConnectionSize: 20
+    testOnBorrow: false
+    testWhileIdle: true
+    minEvictableIdleTimeMillis: 300000
+    timeBetweenEvictionRunsMillis: 60000
+    testOnReturn: false
+    maxActive: 500
+  freemarker:
+    checkTemplateLocation: false
+    settings:
+      template_exception_handler: ignore
+# Dubbo 服务消费者配置
+  dubbo:
+    application:
+      name: autotest
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    # dubbo接口测试时打开
+#    scan: com.autotest

@@ -8,7 +8,7 @@ import java.util.List;
 import static java.util.Collections.singletonList;
 
 /**
- * Created by ychaoyang on 2017/7/17.
+ * Created by huairen on 2017/7/17.
  */
 public class AutoTestInvocationContext implements TestTemplateInvocationContext {
 

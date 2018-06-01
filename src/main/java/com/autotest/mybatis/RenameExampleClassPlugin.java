@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by ychaoyang on 2017/8/2.
+ * Created by huairen on 2017/8/2.
  */
 public class RenameExampleClassPlugin extends PluginAdapter {
     private String searchString;
@@ -22,6 +22,7 @@ public class RenameExampleClassPlugin extends PluginAdapter {
     public RenameExampleClassPlugin() {
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         this.searchString = this.properties.getProperty("searchString");
         this.replaceString = this.properties.getProperty("replaceString");
