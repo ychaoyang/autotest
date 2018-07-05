@@ -1,18 +1,3 @@
-#数据库配置
-ds:
-  #default
-  default:
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
-    username: root
-    password: 123456
-    driverClassName: com.mysql.jdbc.Driver
-  #school
-  school:
-    url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
-    username: root
-    password: 123456
-    driverClassName: com.mysql.jdbc.Driver
-    tables: student
 #连接池的配置信息
 spring:
   datasource:
@@ -34,7 +19,7 @@ spring:
     checkTemplateLocation: false
     settings:
       template_exception_handler: ignore
-# Dubbo 服务消费者配置
+#Dubbo 服务消费者配置
   dubbo:
     application:
       name: autotest
@@ -42,3 +27,18 @@ spring:
       address: zookeeper://127.0.0.1:2181
     # dubbo接口测试时打开
     scan: com.autotest
+#数据库配置
+ds:
+  #default
+  default:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+  #school
+  school:
+    url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    tables: student
