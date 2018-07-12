@@ -1,16 +1,14 @@
-为什么要用AutoTest？
+新特性：
 ==========
-    测试数据与测试代码分离，测试数据放在csv文件中，测试方法支持对象参数。
-
-    AutoTest支持Sping，支持CXF，Dubbo等服务的WebService接口测试，对http接口测试同样支持。
-
-    AutoTest支持WebDriver，支持前端页面自动化测试。
-  
-    AutoTest支持JUnit 5，只需要在测试方法上标注@AutoTest 即可，不再需要@RunWith  @ExtendWith等注解。
+    1.自动生成测试用例
     
-    AutoTest支持MyBatis，自动生成增删查改方法，方便操作数据库。
+    2.测试代码更简洁，全程都是对象传递
     
-    AutoTest支持自动生成测试用例，自动生成csv文件。
+    3.数据准备更方便，可根据需要自动生成csv
+    
+    4.数据验证更容易，直接断言数据库对象
+    
+    5.配置文件更简单，只需一个数据库连接配置
     
 
 使用前
@@ -27,21 +25,21 @@
 ~~~
 @AutoTest(file = "/autotest/simpleTest.csv")
 
-void simpleTest(int testId, String result) {
+void simpleTest(int testId, User user) {
 
     System.out.println("这是第 " + testId + " 条测试用例");
 
-    System.out.println(result);
+    System.out.println(user.getName());
 
 }
 ~~~
 simpleTest.csv文件的内容：
 ~~~
-result,testId
+name,age,testId
 
-SUCCESS,1001
+Lili,18,1001
 
-FAIL,1002
+Zhangsan,19,1002
 ~~~
 csv文件第一行是参数名，参数名之间以英文逗号,隔开
 
@@ -51,9 +49,9 @@ csv文件第二行开始是参数值，与第一行参数名一一对应，从�
 ~~~
 这是第 1001 条测试用例
 
-SUCCESS
+Lili
 
 这是第 1002 条测试用例
 
-FAIL
+Zhangsan
 ~~~
