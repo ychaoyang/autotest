@@ -55,3 +55,13 @@ Lili
 
 Zhangsan
 ~~~
+生成CSV文件
+~~~
+运行测试用例时，若没有找到csv文件则会生成对应的文件，如存在则不会生成
+~~~
+生成数据库操作类
+~~~
+在AutoTest注解中添加project，值填项目名（与数据库名相同），运行用例时则会自动生成数据库操作类，生成完成后去掉project
+@AutoTest(file = "/autotest/simpleTest.csv" , project = "school")
+~~~
+
