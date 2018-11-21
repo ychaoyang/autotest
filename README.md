@@ -62,6 +62,7 @@ Zhangsan
 生成数据库操作类
 ~~~
 在AutoTest注解中添加project，值填项目名（与数据库名相同），运行用例时则会自动生成数据库操作类，生成完成后去掉project
+
 @AutoTest(file = "/autotest/simpleTest.csv" , project = "school")
 ~~~
 
