@@ -1,31 +1,11 @@
-#连接池的配置信息
 spring:
-  datasource:
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=100
-    minIdle: 1
-    validationQuery: SELECT 1 FROM DUAL
-    initialSize: 10
-    maxWait: 6000
-    poolPreparedStatements: false
-    filters: stat
-    maxPoolPreparedStatementPerConnectionSize: 20
-    testOnBorrow: false
-    testWhileIdle: true
-    minEvictableIdleTimeMillis: 300000
-    timeBetweenEvictionRunsMillis: 60000
-    testOnReturn: false
-    maxActive: 500
-  freemarker:
-    checkTemplateLocation: false
-    settings:
-      template_exception_handler: ignore
 #Dubbo 服务消费者配置
   dubbo:
     application:
       name: autotest
-    registry:
-      address: zookeeper://127.0.0.1:2181
-    # dubbo接口测试时打开
+      registries[0]:
+        address: zookeeper://192.168.2.223:2181
+        timeout: 60000
     scan: com.autotest
 #数据库配置
 ds:
